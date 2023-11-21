@@ -1,8 +1,15 @@
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Animals Blog",
+  description: "A list of animals on my animals route.",
+};
 
 type petsSearchQuery = {
   sortBy: string;
 };
+
 type petsType = {
   name: string;
   id: number;
@@ -50,10 +57,11 @@ export default function Page({
 }: {
   searchParams: petsSearchQuery;
 }) {
+  let sortedPets = [...pets];
   if (searchParams.sortBy == "asc") {
-    pets.sort(comparePets);
+    sortedPets.sort(comparePets);
   } else if (searchParams.sortBy == "desc") {
-    pets.sort(comparePets).reverse();
+    sortedPets.sort(comparePets).reverse();
   }
 
   return (
@@ -69,7 +77,7 @@ export default function Page({
       <br />
       <br />
       <br />
-      {pets.map((pet) => {
+      {sortedPets.map((pet) => {
         return (
           <div key={pet.id}>
             <br />
